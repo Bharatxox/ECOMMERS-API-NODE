@@ -51,8 +51,9 @@ const login = async (req, res) => {
   const jwtPayload = {
     userId: user._id,
     role: user.role,
-    mobileNo: user.mobileNo,
+    email: user.email,
     exp: expirayTime,
+    name: user.firstName + " " + user.lastName,
   };
 
   const token = jwt.sign(jwtPayload, "my_secret_key");

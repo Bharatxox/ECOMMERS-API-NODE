@@ -1,5 +1,16 @@
 const mongoose = require("mongoose");
 
+const reviews = {
+  review: {
+    type: String,
+  },
+  rating: {
+    type: Number,
+  },
+  user: { type: mongoose.Types.ObjectId },
+  _id: false,
+};
+
 const productSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -34,6 +45,10 @@ const productSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true,
+  },
+  reviews: {
+    type: [reviews],
+    required: false,
   },
 });
 

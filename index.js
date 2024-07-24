@@ -1,6 +1,10 @@
 const express = require("express");
 const userRouter = require("./routes/user");
 const productRouter = require("./routes/product");
+const wishlistRouter = require("./routes/wishlist");
+const cartRouter = require("./routes/cart");
+const orderRouter = require("./routes/order");
+const reviewRouter = require("./routes/review");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -16,6 +20,10 @@ mongoose
 
 app.use("/api/vi/user", userRouter);
 app.use("/api/vi/product", productRouter);
+app.use("/api/vi/wishlist", wishlistRouter);
+app.use("/api/vi/cart", cartRouter);
+app.use("/api/vi/order", orderRouter);
+app.use("/api/vi/review", reviewRouter);
 
 const port = 10000;
 

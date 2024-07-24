@@ -30,6 +30,19 @@ const address = {
   _id: false,
 };
 
+const cartItem = {
+  productId: {
+    type: mongoose.Types.ObjectId,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 1,
+  },
+  _id: false,
+};
+
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -66,6 +79,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ["CUSTOMER", "SELLER", "ADMIN"],
+  },
+  wishlist: {
+    type: [mongoose.Types.ObjectId],
+    required: false,
+    default: [],
+    ref: "products",
+  },
+  cart: {
+    type: [cartItem],
+    required: false,
+    default: [],
+    ref: "products",
   },
 });
 

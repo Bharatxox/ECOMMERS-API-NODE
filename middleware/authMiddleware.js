@@ -19,7 +19,7 @@ const authMiddleware = async (req, res, next) => {
 
     //decode the token data in console
     const tokenData = jwt.decode(token);
-    console.log(tokenData);
+    // console.log(tokenData);
     // extract the current time and subtract from expiray data to get the expiray
     const currentTimeInSeconds = Math.floor(new Date().getTime() / 1000);
     if (currentTimeInSeconds > tokenData.exp) {
@@ -29,7 +29,7 @@ const authMiddleware = async (req, res, next) => {
 
     //check if any user available of the token
     const user = await userModel.findById(tokenData.userId);
-    console.log(user);
+    // console.log(user);
     if (!user)
       req.status(401).json({ status: false, message: "user not found" });
 
