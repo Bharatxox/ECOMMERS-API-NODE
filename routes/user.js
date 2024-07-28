@@ -1,11 +1,14 @@
 const express = require("express");
 const userController = require("../controller/user");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 router.post("/signup", userController.signup);
 
 router.post("/login", userController.login);
+
+router.post("/logout", authMiddleware, userController.logout); // Add the logout route
 
 router.post("/forgot-password", userController.forgotPassword);
 

@@ -10,12 +10,14 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+require("dotenv").config();
+
 //Middleware
 app.use(express.json());
 
 //DB connection
 mongoose
-  .connect(`mongodb://localhost:27017/ecommers`)
+  .connect(process.env.DATABASE_URL)
   .then(() => console.log("database connection established "))
   .catch((err) => console.error(err));
 

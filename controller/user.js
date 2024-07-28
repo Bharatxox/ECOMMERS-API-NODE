@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
 
+require("dotenv").config();
+
 const sendEmail = (to, subject, text) => {
   const transporter = nodemailer.createTransport({
     service: "Gmail",
@@ -11,13 +13,13 @@ const sendEmail = (to, subject, text) => {
     port: 465,
     secure: false,
     auth: {
-      user: "kamalbisht819@gmail.com",
-      pass: "wtsm fesn dspb fcoi",
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
     },
   });
 
   const mailOptions = {
-    from: "kamalbisht819@gmail.com",
+    from: process.env.GMAIL_USER,
     to: to,
     subject: subject,
     text: text,
@@ -170,12 +172,30 @@ const resetPassword = async (req, res) => {
   });
 };
 
+const logout = async (req, res) => {
+  try {
+    const user = await UserModel.findByIdAndUpdate(req.user._id, {
+      $unset: { token: "" },
+    });
+    res.json({
+      success: true,
+      message: "LOGOUT SUCCESSFUL",
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+
 const userController = {
   signup,
   login,
   forgotPassword,
   resetPassword,
   resetPasswordForm,
+  logout,
 };
 
 module.exports = userController;

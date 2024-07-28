@@ -1,10 +1,12 @@
 const nodemailer = require("nodemailer");
 const CouponModel = require("../models/coupon");
 
+require("dotenv").config();
+
 const Razorpay = require("razorpay");
 const razorpayInstance = new Razorpay({
-  key_id: "rzp_test_Q3rMvDHuDoYY4N",
-  key_secret: "kCWKiYWZleiERdv99PHp2WHt",
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
 });
 
 const OrderModel = require("../models/order");
@@ -16,8 +18,8 @@ const transpoter = nodemailer.createTransport({
   port: 465,
   secure: false,
   auth: {
-    user: "kamalbisht819@gmail.com",
-    pass: "wtsm fesn dspb fcoi",
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -119,7 +121,7 @@ const placeOrder = async (req, res) => {
   // 6. todo: send the email notifcation to  the user by email
   const mailOptions = {
     // to: req.user.email,
-    to: "bharatxox7@gmail.com",
+    to: req.user.email,
     from: "kamalbisht819@gmail.com",
     subject: "Test Mail",
     // text: "welcome to the test mail server",
