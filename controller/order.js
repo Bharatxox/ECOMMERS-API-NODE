@@ -1,4 +1,6 @@
 const nodemailer = require("nodemailer");
+const CouponModel = require("../models/coupon");
+
 // const Razorpay = require("razorpay");
 // const instance = new Razorpay({
 //   key_id: "YOUR_KEY_ID",
@@ -57,6 +59,21 @@ const placeOrder = async (req, res) => {
 
   if (totalAmount > 500) {
     totalAmount += 50; //Delivery charges
+  }
+
+  // Apply coupon if present
+  if (couponCode) {
+    const coupon = await CouponModel.findOne({
+      code: couponCode,
+      isActive: true,
+    });
+    if (!coupon || coupon.expiryDate < Date.now()) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired coupon",
+      });
+    }
+    totalAmount -= (totalAmount * coupon.discount) / 100;
   }
 
   // 3.if the order total is above 1000 then do not apply the user for cod

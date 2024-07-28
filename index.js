@@ -5,6 +5,7 @@ const wishlistRouter = require("./routes/wishlist");
 const cartRouter = require("./routes/cart");
 const orderRouter = require("./routes/order");
 const reviewRouter = require("./routes/review");
+const couponRouter = require("./routes/coupon");
 const mongoose = require("mongoose");
 
 const app = express();
@@ -24,6 +25,7 @@ app.use("/api/vi/wishlist", wishlistRouter);
 app.use("/api/vi/cart", cartRouter);
 app.use("/api/vi/order", orderRouter);
 app.use("/api/vi/review", reviewRouter);
+app.use("/api/vi/coupon", couponRouter);
 
 const port = 10000;
 
