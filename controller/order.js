@@ -1,11 +1,11 @@
 const nodemailer = require("nodemailer");
 const CouponModel = require("../models/coupon");
 
-// const Razorpay = require("razorpay");
-// const instance = new Razorpay({
-//   key_id: "YOUR_KEY_ID",
-//   key_secret: "YOUR_SECRET",
-// });
+const Razorpay = require("razorpay");
+const razorpayInstance = new Razorpay({
+  key_id: "rzp_test_Q3rMvDHuDoYY4N",
+  key_secret: "kCWKiYWZleiERdv99PHp2WHt",
+});
 
 const OrderModel = require("../models/order");
 const ProductModule = require("../models/product");
@@ -62,6 +62,7 @@ const placeOrder = async (req, res) => {
   }
 
   // Apply coupon if present
+  const couponCode = req.body.coupon;
   if (couponCode) {
     const coupon = await CouponModel.findOne({
       code: couponCode,
@@ -79,16 +80,18 @@ const placeOrder = async (req, res) => {
   // 3.if the order total is above 1000 then do not apply the user for cod
 
   // 4. if mode of payment is online redirect to payment gatway
+
+  let razorpayOrderId;
   if (req.body.modeOfpayment === "ONLINE") {
     //REDIRECT to user payment gatway
-    // const options = {
-    //   amount: 50000, // amount in the smallest currency unit
-    //   currency: "INR",
-    //   receipt: "order_rcptid_11",
-    // };
-    // const abc = await instance.orders.create(options, function (err, order) {
-    //   console.log(order);
-    // });
+    const options = {
+      amount: totalAmount * 100, // amount in the smallest currency unit
+      currency: "INR",
+      receipt: `order_rcptid_${new Date().getTime()}`,
+    };
+    const razorpayOrder = await razorpayInstance.orders.create(options);
+    console.log(razorpayOrder);
+    razorpayOrderId = razorpayOrder.id;
   }
 
   // 5. Store the order details in DB
@@ -262,6 +265,7 @@ const placeOrder = async (req, res) => {
     status: true,
     message: "order placed succesfully",
     orderId: _id,
+    razorpayOrderId: razorpayOrderId,
   });
   console.log("user name: ", req.user.firstName);
 };
