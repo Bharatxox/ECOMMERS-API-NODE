@@ -1,4 +1,9 @@
 const nodemailer = require("nodemailer");
+// const Razorpay = require("razorpay");
+// const instance = new Razorpay({
+//   key_id: "YOUR_KEY_ID",
+//   key_secret: "YOUR_SECRET",
+// });
 
 const OrderModel = require("../models/order");
 const ProductModule = require("../models/product");
@@ -54,11 +59,19 @@ const placeOrder = async (req, res) => {
     totalAmount += 50; //Delivery charges
   }
 
-  // 3.if the ordeer total is above 1000 then do not apply the user for cod
+  // 3.if the order total is above 1000 then do not apply the user for cod
 
   // 4. if mode of payment is online redirect to payment gatway
   if (req.body.modeOfpayment === "ONLINE") {
     //REDIRECT to user payment gatway
+    // const options = {
+    //   amount: 50000, // amount in the smallest currency unit
+    //   currency: "INR",
+    //   receipt: "order_rcptid_11",
+    // };
+    // const abc = await instance.orders.create(options, function (err, order) {
+    //   console.log(order);
+    // });
   }
 
   // 5. Store the order details in DB

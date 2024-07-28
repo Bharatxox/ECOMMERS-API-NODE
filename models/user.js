@@ -92,6 +92,16 @@ const userSchema = new mongoose.Schema({
     default: [],
     ref: "products",
   },
+  resetPasswordToken: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  resetPasswordTokenExpiry: {
+    type: Date,
+    required: false,
+    default: null,
+  },
 });
 
 const UserSchema = mongoose.model("user", userSchema);

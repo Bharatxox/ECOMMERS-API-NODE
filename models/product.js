@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const replySchema = new mongoose.Schema({
+  user: { type: mongoose.Types.ObjectId, required: true },
+  reply: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
+});
+
 const reviews = {
   review: {
     type: String,
@@ -8,6 +14,7 @@ const reviews = {
     type: Number,
   },
   user: { type: mongoose.Types.ObjectId },
+  replies: [replySchema], // Add replies to the review schema
   _id: false,
 };
 
