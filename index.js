@@ -21,13 +21,13 @@ mongoose
   .then(() => console.log("database connection established "))
   .catch((err) => console.error(err));
 
-app.use("/api/vi/user", userRouter);
-app.use("/api/vi/product", productRouter);
-app.use("/api/vi/wishlist", wishlistRouter);
-app.use("/api/vi/cart", cartRouter);
-app.use("/api/vi/order", orderRouter);
-app.use("/api/vi/review", reviewRouter);
-app.use("/api/vi/coupon", couponRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/product", productRouter);
+app.use("/api/v1/wishlist", wishlistRouter);
+app.use("/api/v1/cart", cartRouter);
+app.use("/api/v1/order", orderRouter);
+app.use("/api/v1/review", reviewRouter);
+app.use("/api/v1/coupon", couponRouter);
 
 const port = 10000;
 
